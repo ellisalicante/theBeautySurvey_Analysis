@@ -9,7 +9,7 @@ Note: Many of the R tests also use the helper CSV files. Please ensure these are
 
 # Data Availability
 
-The data is available in the corresponding Zenodo repository. Place all the datafiles in the ```csv_storage``` folder to re-run the code for the analysis.
+The data is available in the corresponding [Zenodo repository](https://zenodo.org/doi/10.5281/zenodo.13836854). Place all the datafiles in the ```csv_storage``` folder to re-run the code for the analysis.
 
 The Zenodo repository also contains helper csv files used for the analysis. If you only want to access the collected ratings, scores given by each rater can be found in the ```fullRatingsFile.csv``` file. The centralized scores can be found in the ```allAttributesMedians_df.csv``` file.
 
