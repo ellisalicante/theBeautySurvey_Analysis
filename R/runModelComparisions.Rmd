@@ -1,0 +1,494 @@
+---
+title: "Original"
+output: html_document
+date: "2023-11-07"
+---
+
+```{r setup,  echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+ 
+- classical halo effect
+
+```{r paquets, warning=FALSE, echo=FALSE,message=FALSE}
+library(lme4)    # lmer
+library(lmerTest)
+library(ordinal) # clm
+library(readr)
+library(dplyr)
+#library(stereord)
+require(MASS) # polr
+require(Hmisc)
+library(brant) # test de paralelismo
+library(VGAM) # vglm
+library(generalhoslem)
+library(erer) # marginals
+library(MuMIn) # R2 lmer
+```
+
+- Running all the models with the categorical and re-scaled linear data to see how well all of them actually fit on the data we have
+
+```{r loadData, echo=FALSE}
+
+df_beautified <- read_csv("../csv_storage/beautified_data_rescaled_numeric.csv")
+df_original <- read_csv("../csv_storage/original_data_rescaled_numeric.csv")
+
+# convert all the categorical data to factors
+df_beautified$dataset          <- as.factor(df_beautified$dataset)
+df_beautified$beautification   <- as.factor(df_beautified$beautification)
+df_beautified$imageGender      <- as.factor(df_beautified$imageGender)
+df_beautified$perceived_gender <- as.factor(df_beautified$perceived_gender)
+df_beautified$condition        <- as.factor(df_beautified$condition)
+df_beautified$participantSex   <- as.factor(df_beautified$participantSex)
+
+df_beautified$intelligence_origRating <- factor(df_beautified$intelligence_origRating,ordered = TRUE)
+df_beautified$happy_origRating         <- factor(df_beautified$happy_origRating,ordered = TRUE)
+df_beautified$sociability_origRating   <- factor(df_beautified$sociability_origRating,ordered = TRUE)
+df_beautified$trustworthy_origRating   <- factor(df_beautified$trustworthy_origRating,ordered = TRUE)
+df_beautified$perceived_attractiveness_origRating      <- factor(df_beautified$perceived_attractiveness_origRating,ordered = TRUE)
+
+df_beautified$intelligence_collapsed <- factor(df_beautified$intelligence_collapsed,ordered = TRUE)
+df_beautified$happy_collapsed         <- factor(df_beautified$happy_collapsed,ordered = TRUE)
+df_beautified$sociability_collapsed   <- factor(df_beautified$sociability_collapsed,ordered = TRUE)
+df_beautified$trustworthy_collapsed   <- factor(df_beautified$trustworthy_collapsed,ordered = TRUE)
+df_beautified$perceived_attractiveness_collapsed      <- factor(df_beautified$perceived_attractiveness_collapsed,ordered = TRUE)
+
+
+df_original$dataset          <- as.factor(df_original$dataset)
+df_original$beautification   <- as.factor(df_original$beautification)
+df_original$imageGender      <- as.factor(df_original$imageGender)
+df_original$perceived_gender <- as.factor(df_original$perceived_gender)
+df_original$condition        <- as.factor(df_original$condition)
+df_original$participantSex   <- as.factor(df_original$participantSex)
+
+df_original$intelligence_origRating <- factor(df_original$intelligence_origRating,ordered = TRUE)
+df_original$happy_origRating         <- factor(df_original$happy_origRating,ordered = TRUE)
+df_original$sociability_origRating   <- factor(df_original$sociability_origRating,ordered = TRUE)
+df_original$trustworthy_origRating   <- factor(df_original$trustworthy_origRating,ordered = TRUE)
+df_original$perceived_attractiveness_origRating      <- factor(df_original$perceived_attractiveness_origRating,ordered = TRUE)
+
+df_original$intelligence_collapsed <- factor(df_original$intelligence_collapsed,ordered = TRUE)
+df_original$happy_collapsed         <- factor(df_original$happy_collapsed,ordered = TRUE)
+df_original$sociability_collapsed   <- factor(df_original$sociability_collapsed,ordered = TRUE)
+df_original$trustworthy_collapsed   <- factor(df_original$trustworthy_collapsed,ordered = TRUE)
+df_original$perceived_attractiveness_collapsed      <- factor(df_original$perceived_attractiveness_collapsed,ordered = TRUE)
+
+# the numeric columns need to stay numeric
+```
+
+```{r setVar}
+savePathBase <- "../csv_storage/models/modelFitTests"
+
+dependent_attr <- "sociability" #perceived_attractiveness, feminine, happy, intelligence, trustworthy, unusual, sociability  or the other dependent attributes
+beautification <- "beautified"
+
+savePath <- paste(savePathBase,dependent_attr,beautification,sep="/")
+
+if(beautification == "original"){
+  df <- df_original
+}else{
+  df <- df_beautified
+}
+# the models for the other dependent attributes are different - include attractiveness as a variable
+
+# need to move to my windows partition for an R installation that can handle the clm and clmm
+RUN_MODELS_ORDINAL <- FALSE
+RUN_MODELS_LINEAR <- TRUE
+```
+
+ Run the different models and store their results
+
+ - Ordinal model
+ - Non collapsed scales (all 7L, all factors), 
+ - Raters as fixed effects
+
+```{r  clm_fe_origL_ord, echo=FALSE}
+cellAttributeType <- "_origRating"
+fileName <- paste0(savePath,"/","clm_fe_origL_ord.Rdata")
+
+modelString = "perceived_gender + perceived_age +  
+               participantSex + participantAge  +
+               perceived_gender:participantSex + perceived_age:participantAge"
+
+if(dependent_attr == "perceived_attractiveness"){
+ modelString <- paste0("perceived_attractiveness",cellAttributeType," ~ ",modelString)
+}else{
+  modelString <- paste0("perceived_attractiveness",cellAttributeType,"+",modelString) # add perceived attractiveness as one of the model parameters first
+  modelString <- paste0(dependent_attr,cellAttributeType," ~ ",modelString)
+}
+
+if(RUN_MODELS_ORDINAL){
+  clm_fe_origL_ord <- clm(as.formula(modelString),data = df)
+  save(clm_fe_origL_ord,file=fileName)
+}
+load(fileName)
+clm_fe_origL_ord
+```
+ 
+ - Ordinal model
+ - Non collapsed scales (all 7L, all factors), 
+ - Raters as random effects
+
+```{r  clmm_re_origL_ord, echo=FALSE}
+cellAttributeType <- "_origRating"
+fileName <- paste0(savePath,"/","clmm_re_origL_ord.Rdata")
+
+modelString = "perceived_gender + perceived_age +  
+               participantSex + participantAge  +
+               (1|prolificParticipantID) +
+               perceived_gender:participantSex + perceived_age:participantAge"
+
+if(dependent_attr == "perceived_attractiveness"){
+ modelString <- paste0("perceived_attractiveness",cellAttributeType," ~ ",modelString)
+}else{
+  modelString <- paste0("perceived_attractiveness",cellAttributeType,"+",modelString) # add perceived attractiveness as one of the model parameters first
+  modelString <- paste0(dependent_attr,cellAttributeType," ~ ",modelString)
+}
+
+if(RUN_MODELS_ORDINAL){
+  clmm_re_origL_ord <- clmm(as.formula(modelString),data = df)
+  save(clmm_re_origL_ord,file=fileName)
+}
+load(fileName)
+clmm_re_origL_ord
+```
+
+ - Ordinal model
+ - Collapsed scales for all attributes, treated as ordinal variables, 
+ - Raters as fixed effects
+
+```{r  clm_fe_osmL_ord, echo=FALSE}
+cellAttributeType <- "_collapsed"
+fileName <- paste0(savePath,"/","clm_fe_osmL_ord.Rdata")
+
+modelString = "perceived_gender + perceived_age +  
+               participantSex + participantAge  +
+               perceived_gender:participantSex + perceived_age:participantAge"
+
+if(dependent_attr == "perceived_attractiveness"){
+ modelString <- paste0("perceived_attractiveness",cellAttributeType," ~ ",modelString)
+}else{
+  modelString <- paste0("perceived_attractiveness",cellAttributeType,"+",modelString) # add perceived attractiveness as one of the model parameters first
+  modelString <- paste0(dependent_attr,cellAttributeType," ~ ",modelString)
+}
+
+if(RUN_MODELS_ORDINAL){
+  clm_fe_osmL_ord <- clm(as.formula(modelString),data = df)
+  save(clm_fe_osmL_ord,file=fileName)
+}
+load(fileName)
+clm_fe_osmL_ord
+```
+
+ - Ordinal model
+ - Collapsed scales for all attributes, treated as ordinal variables, 
+ - Raters as random effects
+
+```{r  clmm_re_osmL_ord, echo=FALSE}
+cellAttributeType <- "_collapsed"
+fileName <- paste0(savePath,"/","clmm_re_osmL_ord.Rdata")
+
+modelString = "perceived_gender + perceived_age +  
+               participantSex + participantAge  +
+               (1|prolificParticipantID) +
+               perceived_gender:participantSex + perceived_age:participantAge"
+
+if(dependent_attr == "perceived_attractiveness"){
+ modelString <- paste0("perceived_attractiveness",cellAttributeType," ~ ",modelString)
+}else{
+  modelString <- paste0("perceived_attractiveness",cellAttributeType,"+",modelString) # add perceived attractiveness as one of the model parameters first
+  modelString <- paste0(dependent_attr,cellAttributeType," ~ ",modelString)
+}
+
+if(RUN_MODELS_ORDINAL){
+  clmm_re_osmL_ord <- clmm(as.formula(modelString),data = df)
+  save(clmm_re_osmL_ord,file=fileName)
+}
+load(fileName)
+clmm_re_osmL_ord
+```
+
+# End of ordinal model computation
+
+# Now start building the linear models
+
+## First start with re-interpreting the factors as numeric columns to be able to pass them into the linear model functions
+
+```{r convertToNumeric, echo=FALSE}
+df$intelligence_origRating  <- as.numeric(df$intelligence_origRating)
+df$happy_origRating         <- as.numeric(df$happy_origRating)
+df$sociability_origRating   <- as.numeric(df$sociability_origRating)
+df$unusual_origRating       <- as.numeric(df$unusual_origRating)
+df$trustworthy_origRating   <- as.numeric(df$trustworthy_origRating)
+df$feminine_origRating      <- as.numeric(df$feminine_origRating)
+df$perceived_attractiveness_origRating <- as.numeric(df$perceived_attractiveness_origRating)
+
+df$intelligence_collapsed  <- as.numeric(df$intelligence_collapsed)
+df$happy_collapsed         <- as.numeric(df$happy_collapsed)
+df$sociability_collapsed   <- as.numeric(df$sociability_collapsed)
+df$unusual_collapsed       <- as.numeric(df$unusual_collapsed)
+df$trustworthy_collapsed   <- as.numeric(df$trustworthy_collapsed)
+df$feminine_collapsed      <- as.numeric(df$feminine_collapsed)
+df$perceived_attractiveness_collapsed <- as.numeric(df$perceived_attractiveness_collapsed)
+```
+
+ - Linear model
+ - Non collapsed scales (all 7L, all numeric), 
+ - Raters as fixed effects
+
+```{r  lm_fe_origL_lin, echo=FALSE}
+cellAttributeType <- "_origRating"
+fileName <- paste0(savePath,"/","lm_fe_origL_lin.Rdata")
+
+modelString = "perceived_gender + perceived_age +  
+               participantSex + participantAge  +
+               perceived_gender:participantSex + perceived_age:participantAge"
+
+if(dependent_attr == "perceived_attractiveness"){
+ modelString <- paste0("perceived_attractiveness",cellAttributeType," ~ ",modelString)
+}else{
+  modelString <- paste0("perceived_attractiveness",cellAttributeType,"+",modelString) # add perceived attractiveness as one of the model parameters first
+  modelString <- paste0(dependent_attr,cellAttributeType," ~ ",modelString)
+}
+
+if(RUN_MODELS_LINEAR){
+  lm_fe_origL_lin <- lm(as.formula(modelString),data = df)
+  save(lm_fe_origL_lin,file=fileName)
+}
+load(fileName)
+lm_fe_origL_lin
+```
+
+ - Linear model
+ - Non collapsed scales (all 7L, all numeric), 
+ - Raters as random effects
+
+```{r  lmer_re_origL_lin, echo=FALSE}
+cellAttributeType <- "_origRating"
+fileName <- paste0(savePath,"/","lmer_re_origL_lin.Rdata")
+
+modelString = "perceived_gender + perceived_age +  
+               participantSex + participantAge  +
+               (1|prolificParticipantID) +
+               perceived_gender:participantSex + perceived_age:participantAge"
+
+if(dependent_attr == "perceived_attractiveness"){
+ modelString <- paste0("perceived_attractiveness",cellAttributeType," ~ ",modelString)
+}else{
+  modelString <- paste0("perceived_attractiveness",cellAttributeType,"+",modelString) # add perceived attractiveness as one of the model parameters first
+  modelString <- paste0(dependent_attr,cellAttributeType," ~ ",modelString)
+}
+
+if(RUN_MODELS_LINEAR){
+  lmer_re_origL_lin <- lmer(as.formula(modelString),data = df)
+  save(lmer_re_origL_lin,file=fileName)
+}
+load(fileName)
+lmer_re_origL_lin
+```
+
+ - Linear model
+ - Collapsed scales, but equidistant (all not 7L, all numeric), 
+ - Raters as fixed effects
+
+```{r  lm_fe_osmColL_lin, echo=FALSE}
+cellAttributeType <- "_collapsed"
+fileName <- paste0(savePath,"/","lm_fe_osmColL_lin.Rdata")
+
+modelString = "perceived_gender + perceived_age +  
+               participantSex + participantAge  +
+               perceived_gender:participantSex + perceived_age:participantAge"
+
+if(dependent_attr == "perceived_attractiveness"){
+ modelString <- paste0("perceived_attractiveness",cellAttributeType," ~ ",modelString)
+}else{
+  modelString <- paste0("perceived_attractiveness",cellAttributeType,"+",modelString) # add perceived attractiveness as one of the model parameters first
+  modelString <- paste0(dependent_attr,cellAttributeType," ~ ",modelString)
+}
+
+if(RUN_MODELS_LINEAR){
+  lm_fe_osmColL_lin <- lm(as.formula(modelString),data = df)
+  save(lm_fe_osmColL_lin,file=fileName)
+}
+load(fileName)
+lm_fe_osmColL_lin
+```
+
+ - Linear model
+ - Collapsed scales, but equidistant (all not 7L, all numeric), 
+ - Raters as random effects
+
+```{r  lmer_re_osmColL_lin, echo=FALSE}
+cellAttributeType <- "_collapsed"
+fileName <- paste0(savePath,"/","lmer_re_osmColL_lin.Rdata")
+
+modelString = "perceived_gender + perceived_age +  
+               participantSex + participantAge  +
+               (1|prolificParticipantID) +
+               perceived_gender:participantSex + perceived_age:participantAge"
+
+if(dependent_attr == "perceived_attractiveness"){
+ modelString <- paste0("perceived_attractiveness",cellAttributeType," ~ ",modelString)
+}else{
+  modelString <- paste0("perceived_attractiveness",cellAttributeType,"+",modelString) # add perceived attractiveness as one of the model parameters first
+  modelString <- paste0(dependent_attr,cellAttributeType," ~ ",modelString)
+}
+
+if(RUN_MODELS_LINEAR){
+  lmer_re_osmColL_lin <- lmer(as.formula(modelString),data = df)
+  save(lmer_re_osmColL_lin,file=fileName)
+}
+load(fileName)
+lmer_re_osmColL_lin
+```
+
+ - Linear model
+ - Collapsed scales, distances changed too (all numeric), 
+ - Raters as fixed effects
+
+```{r  lm_fe_osmFinalL_lin, echo=FALSE}
+cellAttributeType <- "_rescaledNumeric"
+fileName <- paste0(savePath,"/","lm_fe_osmFinalL_lin.Rdata")
+
+modelString = "perceived_gender + perceived_age +  
+               participantSex + participantAge  +
+               perceived_gender:participantSex + perceived_age:participantAge"
+
+if(dependent_attr == "perceived_attractiveness"){
+ modelString <- paste0("perceived_attractiveness",cellAttributeType," ~ ",modelString)
+}else{
+  modelString <- paste0("perceived_attractiveness",cellAttributeType,"+",modelString) # add perceived attractiveness as one of the model parameters first
+  modelString <- paste0(dependent_attr,cellAttributeType," ~ ",modelString)
+}
+
+if(RUN_MODELS_LINEAR){
+  lm_fe_osmFinalL_lin <- lm(as.formula(modelString),data = df)
+  save(lm_fe_osmFinalL_lin,file=fileName)
+}
+load(fileName)
+lm_fe_osmFinalL_lin
+```
+
+ - Linear model
+ - Collapsed scales, distances changed too (all numeric),  
+ - Raters as random effects
+
+```{r  lmer_re_osmFinalL_lin, echo=FALSE}
+cellAttributeType <- "_rescaledNumeric"
+fileName <- paste0(savePath,"/","lmer_re_osmFinalL_lin.Rdata")
+
+modelString = "perceived_gender + perceived_age +  
+               participantSex + participantAge  +
+               (1|prolificParticipantID) +
+               perceived_gender:participantSex + perceived_age:participantAge"
+
+if(dependent_attr == "perceived_attractiveness"){
+ modelString <- paste0("perceived_attractiveness",cellAttributeType," ~ ",modelString)
+}else{
+  modelString <- paste0("perceived_attractiveness",cellAttributeType,"+",modelString) # add perceived attractiveness as one of the model parameters first
+  modelString <- paste0(dependent_attr,cellAttributeType," ~ ",modelString)
+}
+
+if(RUN_MODELS_LINEAR){
+  lmer_re_osmFinalL_lin <- lmer(as.formula(modelString),data = df)
+  save(lmer_re_osmFinalL_lin,file=fileName)
+}
+load(fileName)
+lmer_re_osmFinalL_lin
+```
+Try running the linear model with contrasts set to both the gender attributes so that I can see the interaction terms clearly
+```{r, echo=TRUE}
+cellAttributeType <- "_rescaledNumeric"
+fileName <- paste0(savePath,"/","lmer_re_osmFinalL_lin.Rdata")
+
+modelString = "perceived_gender + perceived_age +  
+               participantSex + participantAge  +
+               (1|prolificParticipantID) +
+               perceived_gender:participantSex + perceived_age:participantAge"
+
+if(dependent_attr == "perceived_attractiveness"){
+ modelString <- paste0("perceived_attractiveness",cellAttributeType," ~ ",modelString)
+}else{
+  modelString <- paste0("perceived_attractiveness",cellAttributeType,"+",modelString) # add perceived attractiveness as one of the model parameters first
+  modelString <- paste0(dependent_attr,cellAttributeType," ~ ",modelString)
+}
+
+if(RUN_MODELS_LINEAR){
+  lmer_re_osmFinalL_lin <- lmer(as.formula(modelString),data = df,contrasts = list(perceived_gender = contr.treatment, participantSex = contr.treatment))
+  #save(lmer_re_osmFinalL_lin,file=fileName)
+}
+#load(fileName)
+summary(lmer_re_osmFinalL_lin)
+a```
+```
+
+
+##  Models comparation AIC and BIC
+
+- AIC
+```{r, echo=FALSE}
+
+a <- c(
+0,#AIC(clm_fe_origL_ord),
+0,#AIC(clmm_re_origL_ord),
+0,#AIC(clm_fe_osmL_ord),
+0,#AIC(clmm_re_osmL_ord),
+AIC(lm_fe_origL_lin),
+AIC(lmer_re_origL_lin),
+AIC(lm_fe_osmColL_lin),
+AIC(lmer_re_osmColL_lin),
+AIC(lm_fe_osmFinalL_lin),
+AIC(lmer_re_osmFinalL_lin)
+)
+
+  
+Vnames <- c(
+"clm_fe_origL_ord",
+"clmm_re_origL_ord",
+"clm_fe_osmL_ord",
+"clmm_re_osmL_ord",
+"lm_fe_origL_lin",
+"lmer_re_origL_lin",
+"lm_fe_osmColL_lin",
+"lmer_re_osmColL_lin",
+"lm_fe_osmFinalL_lin",
+"lmer_re_osmFinalL_lin"
+)
+
+names(a) <- Vnames
+index <- order(a)
+
+a[index]
+
+```
+
+- BIC : bayesian information critrion
+
+```{r, echo=FALSE}
+
+a <- c(
+BIC(clm_fe_origL_ord),
+BIC(clmm_re_origL_ord),
+BIC(clm_fe_osmL_ord),
+BIC(clmm_re_osmL_ord),
+BIC(lm_fe_origL_lin),
+BIC(lmer_re_origL_lin),
+BIC(lm_fe_osmColL_lin),
+BIC(lmer_re_osmColL_lin),
+BIC(lm_fe_osmFinalL_lin),
+BIC(lmer_re_osmFinalL_lin)
+)
+
+names(a) <- Vnames
+index <- order(a)
+
+a[index]
+
+```
+
+# previous conclusions
+
+- better with random effects on the rater than without
+- better categorical factor than continuous
+- better 6-categorical factor than 7categorical factor 
+

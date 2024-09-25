@@ -1,0 +1,708 @@
+## [1] "--------------------------------"
+## [1] "perceived_attractiveness"
+## [1] "original"
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: as.formula(modelString)
+##    Data: df
+## 
+## REML criterion at convergence: -422.5
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -2.7435 -0.6572 -0.1294  0.5963  3.4816 
+## 
+## Random effects:
+##  Groups                Name        Variance Std.Dev.
+##  prolificParticipantID (Intercept) 0.01691  0.1300  
+##  Residual                          0.04592  0.2143  
+## Number of obs: 13740, groups:  prolificParticipantID, 2748
+## 
+## Fixed effects:
+##                                              Estimate Std. Error         df
+## (Intercept)                                 5.733e-01  9.932e-03  6.148e+03
+## perceived_gendermale                       -1.134e-01  5.265e-03  1.138e+04
+## perceived_age_scaled                       -4.720e-01  2.165e-02  1.364e+04
+## participantSexmale                         -5.760e-02  7.291e-03  4.958e+03
+## participantAge_scaled                       7.775e-02  1.884e-02  5.969e+03
+## perceived_gendermale:participantSexmale     3.620e-02  7.445e-03  1.139e+04
+## perceived_age_scaled:participantAge_scaled  1.796e-01  4.665e-02  1.365e+04
+##                                            t value Pr(>|t|)    
+## (Intercept)                                 57.719  < 2e-16 ***
+## perceived_gendermale                       -21.535  < 2e-16 ***
+## perceived_age_scaled                       -21.807  < 2e-16 ***
+## participantSexmale                          -7.901 3.39e-15 ***
+## participantAge_scaled                        4.126 3.74e-05 ***
+## perceived_gendermale:participantSexmale      4.862 1.18e-06 ***
+## perceived_age_scaled:participantAge_scaled   3.850 0.000119 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) prcvd_ prcv__ prtcpS prtcA_ prc_:S
+## prcvd_gndrm -0.270                                   
+## prcvd_g_scl -0.586  0.000                            
+## prtcpntSxml -0.429  0.369  0.010                     
+## prtcpntAg_s -0.813  0.007  0.580  0.077              
+## prcvd_gnd:S  0.191 -0.707  0.002 -0.525 -0.004       
+## prcvd_g_:A_  0.513 -0.011 -0.885 -0.005 -0.645  0.006
+## [1] "********"
+## [1] "beautified"
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: as.formula(modelString)
+##    Data: df
+## 
+## REML criterion at convergence: 2568.2
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.0204 -0.6852 -0.0877  0.6798  3.3319 
+## 
+## Random effects:
+##  Groups                Name        Variance Std.Dev.
+##  prolificParticipantID (Intercept) 0.01790  0.1338  
+##  Residual                          0.05842  0.2417  
+## Number of obs: 13740, groups:  prolificParticipantID, 2748
+## 
+## Fixed effects:
+##                                              Estimate Std. Error         df
+## (Intercept)                                 5.860e-01  1.013e-02  5.447e+03
+## perceived_gendermale                       -1.670e-01  5.944e-03  1.141e+04
+## perceived_age_scaled                       -5.559e-01  2.638e-02  1.373e+04
+## participantSexmale                         -4.854e-02  7.864e-03  5.181e+03
+## participantAge_scaled                       4.762e-02  1.911e-02  5.168e+03
+## perceived_gendermale:participantSexmale    -1.160e-02  8.376e-03  1.140e+04
+## perceived_age_scaled:participantAge_scaled  2.077e-01  5.770e-02  1.373e+04
+##                                            t value Pr(>|t|)    
+## (Intercept)                                 57.820  < 2e-16 ***
+## perceived_gendermale                       -28.097  < 2e-16 ***
+## perceived_age_scaled                       -21.071  < 2e-16 ***
+## participantSexmale                          -6.173 7.21e-10 ***
+## participantAge_scaled                        2.492  0.01275 *  
+## perceived_gendermale:participantSexmale     -1.385  0.16600    
+## perceived_age_scaled:participantAge_scaled   3.599  0.00032 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) prcvd_ prcv__ prtcpS prtcA_ prc_:S
+## prcvd_gndrm -0.279                                   
+## prcvd_g_scl -0.528 -0.027                            
+## prtcpntSxml -0.448  0.380  0.007                     
+## prtcpntAg_s -0.807  0.002  0.539  0.076              
+## prcvd_gnd:S  0.209 -0.706 -0.003 -0.542 -0.002       
+## prcvd_g_:A_  0.467 -0.014 -0.883 -0.001 -0.597  0.010
+## [1] "********"
+## [1] "--------------------------------"
+## [1] "feminine"
+## [1] "original"
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: as.formula(modelString)
+##    Data: df
+## 
+## REML criterion at convergence: -6920
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -4.0682 -0.6478 -0.0977  0.5714  5.0209 
+## 
+## Random effects:
+##  Groups                Name        Variance Std.Dev.
+##  prolificParticipantID (Intercept) 0.002539 0.05039 
+##  Residual                          0.033012 0.18169 
+## Number of obs: 13740, groups:  prolificParticipantID, 2748
+## 
+## Fixed effects:
+##                                               Estimate Std. Error         df
+## (Intercept)                                  5.283e-01  7.730e-03  8.102e+03
+## perceived_attractiveness_rescaledNumeric_01  2.560e-01  6.579e-03  1.228e+04
+## perceived_gendermale                        -4.541e-01  4.482e-03  1.196e+04
+## perceived_age_scaled                        -6.722e-02  1.717e-02  1.292e+04
+## participantSexmale                           3.991e-02  4.896e-03  7.156e+03
+## participantAge_scaled                       -6.590e-02  1.277e-02  6.698e+03
+## perceived_gendermale:participantSexmale     -1.296e-02  6.254e-03  1.181e+04
+## perceived_age_scaled:participantAge_scaled   2.718e-02  3.647e-02  1.301e+04
+##                                              t value Pr(>|t|)    
+## (Intercept)                                   68.335  < 2e-16 ***
+## perceived_attractiveness_rescaledNumeric_01   38.909  < 2e-16 ***
+## perceived_gendermale                        -101.314  < 2e-16 ***
+## perceived_age_scaled                          -3.914 9.12e-05 ***
+## participantSexmale                             8.152 4.21e-16 ***
+## participantAge_scaled                         -5.159 2.56e-07 ***
+## perceived_gendermale:participantSexmale       -2.072   0.0383 *  
+## perceived_age_scaled:participantAge_scaled     0.745   0.4561    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) p__N_0 prcvd_ prcv__ prtcpS prtcA_ prc_:S
+## prcvd__N_01 -0.480                                          
+## prcvd_gndrm -0.368  0.166                                   
+## prcvd_g_scl -0.661  0.168  0.028                            
+## prtcpntSxml -0.396  0.077  0.468  0.024                     
+## prtcpntAg_s -0.687 -0.041  0.000  0.652  0.058              
+## prcvd_gnd:S  0.224 -0.038 -0.703 -0.005 -0.659 -0.003       
+## prcvd_g_:A_  0.531 -0.031 -0.015 -0.878 -0.008 -0.742  0.006
+## [1] "********"
+## [1] "beautified"
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: as.formula(modelString)
+##    Data: df
+## 
+## REML criterion at convergence: -6326
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -4.2643 -0.5491 -0.1308  0.5148  5.3487 
+## 
+## Random effects:
+##  Groups                Name        Variance Std.Dev.
+##  prolificParticipantID (Intercept) 0.002957 0.05437 
+##  Residual                          0.034243 0.18505 
+## Number of obs: 13740, groups:  prolificParticipantID, 2748
+## 
+## Fixed effects:
+##                                               Estimate Std. Error         df
+## (Intercept)                                  5.738e-01  7.333e-03  7.421e+03
+## perceived_attractiveness_rescaledNumeric_01  2.487e-01  6.083e-03  1.283e+04
+## perceived_gendermale                        -5.659e-01  4.628e-03  1.199e+04
+## perceived_age_scaled                        -2.936e-02  1.911e-02  1.283e+04
+## participantSexmale                           1.363e-03  5.006e-03  6.948e+03
+## participantAge_scaled                       -1.866e-02  1.202e-02  5.635e+03
+## perceived_gendermale:participantSexmale      1.887e-02  6.364e-03  1.171e+04
+## perceived_age_scaled:participantAge_scaled  -7.887e-02  4.122e-02  1.292e+04
+##                                              t value Pr(>|t|)    
+## (Intercept)                                   78.247  < 2e-16 ***
+## perceived_attractiveness_rescaledNumeric_01   40.884  < 2e-16 ***
+## perceived_gendermale                        -122.277  < 2e-16 ***
+## perceived_age_scaled                          -1.536  0.12446    
+## participantSexmale                             0.272  0.78545    
+## participantAge_scaled                         -1.553  0.12055    
+## perceived_gendermale:participantSexmale        2.965  0.00304 ** 
+## perceived_age_scaled:participantAge_scaled    -1.913  0.05572 .  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) p__N_0 prcvd_ prcv__ prtcpS prtcA_ prc_:S
+## prcvd__N_01 -0.481                                          
+## prcvd_gndrm -0.393  0.219                                   
+## prcvd_g_scl -0.594  0.168  0.012                            
+## prtcpntSxml -0.412  0.058  0.456  0.018                     
+## prtcpntAg_s -0.687 -0.025 -0.003  0.599  0.061              
+## prcvd_gnd:S  0.214  0.012 -0.686 -0.002 -0.647 -0.003       
+## prcvd_g_:A_  0.475 -0.030 -0.020 -0.875 -0.004 -0.677  0.010
+## [1] "********"
+## [1] "--------------------------------"
+## [1] "happy"
+## [1] "original"
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: as.formula(modelString)
+##    Data: df
+## 
+## REML criterion at convergence: -19079.4
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.4289 -0.5532  0.0773  0.5644  6.3176 
+## 
+## Random effects:
+##  Groups                Name        Variance Std.Dev.
+##  prolificParticipantID (Intercept) 0.003858 0.06211 
+##  Residual                          0.012000 0.10954 
+## Number of obs: 13740, groups:  prolificParticipantID, 2748
+## 
+## Fixed effects:
+##                                               Estimate Std. Error         df
+## (Intercept)                                  1.891e-01  5.526e-03  7.633e+03
+## perceived_attractiveness_rescaledNumeric_01  2.181e-01  4.324e-03  1.372e+04
+## perceived_gendermale                         8.167e-03  2.733e-03  1.154e+04
+## perceived_age_scaled                         1.115e-02  1.117e-02  1.371e+04
+## participantSexmale                           1.348e-02  3.622e-03  5.173e+03
+## participantAge_scaled                        3.383e-02  9.374e-03  6.100e+03
+## perceived_gendermale:participantSexmale     -2.767e-03  3.806e-03  1.142e+04
+## perceived_age_scaled:participantAge_scaled   8.526e-04  2.368e-02  1.370e+04
+##                                             t value Pr(>|t|)    
+## (Intercept)                                  34.217  < 2e-16 ***
+## perceived_attractiveness_rescaledNumeric_01  50.453  < 2e-16 ***
+## perceived_gendermale                          2.988  0.00282 ** 
+## perceived_age_scaled                          0.999  0.31802    
+## participantSexmale                            3.722  0.00020 ***
+## participantAge_scaled                         3.609  0.00031 ***
+## perceived_gendermale:participantSexmale      -0.727  0.46716    
+## perceived_age_scaled:participantAge_scaled    0.036  0.97128    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) p__N_0 prcvd_ prcv__ prtcpS prtcA_ prc_:S
+## prcvd__N_01 -0.448                                          
+## prcvd_gndrm -0.325  0.179                                   
+## prcvd_g_scl -0.607  0.181  0.033                            
+## prtcpntSxml -0.411  0.069  0.385  0.022                     
+## prtcpntAg_s -0.710 -0.036  0.000  0.575  0.073              
+## prcvd_gnd:S  0.193 -0.041 -0.702 -0.005 -0.542 -0.003       
+## prcvd_g_:A_  0.482 -0.033 -0.017 -0.876 -0.007 -0.656  0.007
+## [1] "********"
+## [1] "beautified"
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: as.formula(modelString)
+##    Data: df
+## 
+## REML criterion at convergence: -13937.6
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -4.2167 -0.5529  0.0654  0.5684  3.7683 
+## 
+## Random effects:
+##  Groups                Name        Variance Std.Dev.
+##  prolificParticipantID (Intercept) 0.00460  0.06782 
+##  Residual                          0.01792  0.13386 
+## Number of obs: 13740, groups:  prolificParticipantID, 2748
+## 
+## Fixed effects:
+##                                               Estimate Std. Error         df
+## (Intercept)                                  4.484e-01  6.069e-03  6.961e+03
+## perceived_attractiveness_rescaledNumeric_01  1.871e-01  4.675e-03  1.371e+04
+## perceived_gendermale                        -2.554e-02  3.379e-03  1.167e+04
+## perceived_age_scaled                         3.275e-02  1.469e-02  1.371e+04
+## participantSexmale                          -3.672e-03  4.206e-03  5.442e+03
+## participantAge_scaled                        4.774e-02  1.021e-02  5.269e+03
+## perceived_gendermale:participantSexmale      1.398e-02  4.634e-03  1.144e+04
+## perceived_age_scaled:participantAge_scaled  -3.098e-02  3.164e-02  1.372e+04
+##                                             t value Pr(>|t|)    
+## (Intercept)                                  73.889  < 2e-16 ***
+## perceived_attractiveness_rescaledNumeric_01  40.021  < 2e-16 ***
+## perceived_gendermale                         -7.556 4.45e-14 ***
+## perceived_age_scaled                          2.229  0.02580 *  
+## participantSexmale                           -0.873  0.38269    
+## participantAge_scaled                         4.677 2.98e-06 ***
+## perceived_gendermale:participantSexmale       3.017  0.00256 ** 
+## perceived_age_scaled:participantAge_scaled   -0.979  0.32747    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) p__N_0 prcvd_ prcv__ prtcpS prtcA_ prc_:S
+## prcvd__N_01 -0.451                                          
+## prcvd_gndrm -0.355  0.231                                   
+## prcvd_g_scl -0.554  0.176  0.015                            
+## prtcpntSxml -0.422  0.054  0.395  0.016                     
+## prtcpntAg_s -0.709 -0.022 -0.003  0.541  0.072              
+## prcvd_gnd:S  0.188  0.012 -0.684 -0.001 -0.560 -0.002       
+## prcvd_g_:A_  0.441 -0.031 -0.020 -0.874 -0.003 -0.612  0.009
+## [1] "********"
+## [1] "--------------------------------"
+## [1] "intelligence"
+## [1] "original"
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: as.formula(modelString)
+##    Data: df
+## 
+## REML criterion at convergence: -16194.1
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -6.4734 -0.3259  0.1017  0.5545  3.6659 
+## 
+## Random effects:
+##  Groups                Name        Variance Std.Dev.
+##  prolificParticipantID (Intercept) 0.003678 0.06065 
+##  Residual                          0.015316 0.12376 
+## Number of obs: 13740, groups:  prolificParticipantID, 2748
+## 
+## Fixed effects:
+##                                               Estimate Std. Error         df
+## (Intercept)                                  7.675e-01  5.959e-03  7.861e+03
+## perceived_attractiveness_rescaledNumeric_01  2.227e-01  4.791e-03  1.357e+04
+## perceived_gendermale                         1.066e-02  3.081e-03  1.163e+04
+## perceived_age_scaled                         4.550e-02  1.241e-02  1.372e+04
+## participantSexmale                          -4.548e-03  3.858e-03  5.607e+03
+## participantAge_scaled                        1.640e-02  1.003e-02  6.331e+03
+## perceived_gendermale:participantSexmale     -2.020e-03  4.291e-03  1.150e+04
+## perceived_age_scaled:participantAge_scaled  -3.006e-02  2.632e-02  1.373e+04
+##                                             t value Pr(>|t|)    
+## (Intercept)                                 128.782  < 2e-16 ***
+## perceived_attractiveness_rescaledNumeric_01  46.480  < 2e-16 ***
+## perceived_gendermale                          3.462 0.000538 ***
+## perceived_age_scaled                          3.667 0.000246 ***
+## participantSexmale                           -1.179 0.238576    
+## participantAge_scaled                         1.634 0.102204    
+## perceived_gendermale:participantSexmale      -0.471 0.637772    
+## perceived_age_scaled:participantAge_scaled   -1.142 0.253373    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) p__N_0 prcvd_ prcv__ prtcpS prtcA_ prc_:S
+## prcvd__N_01 -0.459                                          
+## prcvd_gndrm -0.337  0.176                                   
+## prcvd_g_scl -0.624  0.178  0.032                            
+## prtcpntSxml -0.406  0.071  0.408  0.023                     
+## prtcpntAg_s -0.703 -0.037  0.000  0.597  0.069              
+## prcvd_gnd:S  0.202 -0.040 -0.703 -0.005 -0.574 -0.003       
+## prcvd_g_:A_  0.497 -0.032 -0.016 -0.877 -0.007 -0.682  0.007
+## [1] "********"
+## [1] "beautified"
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: as.formula(modelString)
+##    Data: df
+## 
+## REML criterion at convergence: -12102.2
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -5.9113 -0.4682 -0.0179  0.5402  3.5876 
+## 
+## Random effects:
+##  Groups                Name        Variance Std.Dev.
+##  prolificParticipantID (Intercept) 0.007833 0.08851 
+##  Residual                          0.019366 0.13916 
+## Number of obs: 13740, groups:  prolificParticipantID, 2748
+## 
+## Fixed effects:
+##                                               Estimate Std. Error         df
+## (Intercept)                                  5.758e-01  6.867e-03  6.448e+03
+## perceived_attractiveness_rescaledNumeric_01  1.807e-01  4.995e-03  1.367e+04
+## perceived_gendermale                         2.208e-02  3.528e-03  1.150e+04
+## perceived_age_scaled                         1.882e-01  1.569e-02  1.367e+04
+## participantSexmale                          -1.507e-02  4.835e-03  4.749e+03
+## participantAge_scaled                        8.758e-02  1.173e-02  4.906e+03
+## perceived_gendermale:participantSexmale      7.740e-03  4.830e-03  1.130e+04
+## perceived_age_scaled:participantAge_scaled  -1.690e-01  3.377e-02  1.364e+04
+##                                             t value Pr(>|t|)    
+## (Intercept)                                  83.846  < 2e-16 ***
+## perceived_attractiveness_rescaledNumeric_01  36.182  < 2e-16 ***
+## perceived_gendermale                          6.259 4.00e-10 ***
+## perceived_age_scaled                         11.996  < 2e-16 ***
+## participantSexmale                           -3.118  0.00183 ** 
+## participantAge_scaled                         7.465 9.81e-14 ***
+## perceived_gendermale:participantSexmale       1.602  0.10909    
+## perceived_age_scaled:participantAge_scaled   -5.005 5.65e-07 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) p__N_0 prcvd_ prcv__ prtcpS prtcA_ prc_:S
+## prcvd__N_01 -0.427                                          
+## prcvd_gndrm -0.331  0.236                                   
+## prcvd_g_scl -0.525  0.179  0.016                            
+## prtcpntSxml -0.430  0.050  0.358  0.015                     
+## prtcpntAg_s -0.722 -0.020 -0.003  0.502  0.079              
+## prcvd_gnd:S  0.173  0.012 -0.683 -0.001 -0.508 -0.002       
+## prcvd_g_:A_  0.416 -0.031 -0.020 -0.874 -0.003 -0.568  0.009
+## [1] "********"
+## [1] "--------------------------------"
+## [1] "trustworthy"
+## [1] "original"
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: as.formula(modelString)
+##    Data: df
+## 
+## REML criterion at convergence: -10361
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -4.9330 -0.4701  0.1064  0.5490  3.6004 
+## 
+## Random effects:
+##  Groups                Name        Variance Std.Dev.
+##  prolificParticipantID (Intercept) 0.00847  0.09203 
+##  Residual                          0.02215  0.14882 
+## Number of obs: 13740, groups:  prolificParticipantID, 2748
+## 
+## Fixed effects:
+##                                               Estimate Std. Error         df
+## (Intercept)                                  5.552e-01  7.743e-03  7.401e+03
+## perceived_attractiveness_rescaledNumeric_01  2.877e-01  5.941e-03  1.373e+04
+## perceived_gendermale                        -2.183e-02  3.719e-03  1.147e+04
+## perceived_age_scaled                         8.323e-02  1.532e-02  1.365e+04
+## participantSexmale                          -4.070e-03  5.121e-03  4.881e+03
+## participantAge_scaled                        2.078e-02  1.320e-02  5.884e+03
+## perceived_gendermale:participantSexmale     -7.442e-03  5.176e-03  1.135e+04
+## perceived_age_scaled:participantAge_scaled   2.791e-02  3.248e-02  1.363e+04
+##                                             t value Pr(>|t|)    
+## (Intercept)                                  71.701  < 2e-16 ***
+## perceived_attractiveness_rescaledNumeric_01  48.435  < 2e-16 ***
+## perceived_gendermale                         -5.871 4.46e-09 ***
+## perceived_age_scaled                          5.432 5.67e-08 ***
+## participantSexmale                           -0.795    0.427    
+## participantAge_scaled                         1.574    0.116    
+## perceived_gendermale:participantSexmale      -1.438    0.151    
+## perceived_age_scaled:participantAge_scaled    0.859    0.390    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) p__N_0 prcvd_ prcv__ prtcpS prtcA_ prc_:S
+## prcvd__N_01 -0.440                                          
+## prcvd_gndrm -0.317  0.181                                   
+## prcvd_g_scl -0.595  0.183  0.033                            
+## prtcpntSxml -0.414  0.067  0.371  0.022                     
+## prtcpntAg_s -0.715 -0.035  0.000  0.560  0.075              
+## prcvd_gnd:S  0.188 -0.042 -0.702 -0.005 -0.522 -0.003       
+## prcvd_g_:A_  0.472 -0.033 -0.017 -0.876 -0.007 -0.639  0.007
+## [1] "********"
+## [1] "beautified"
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: as.formula(modelString)
+##    Data: df
+## 
+## REML criterion at convergence: -14254.3
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -4.4942 -0.4786  0.0490  0.6008  4.1466 
+## 
+## Random effects:
+##  Groups                Name        Variance Std.Dev.
+##  prolificParticipantID (Intercept) 0.006285 0.07928 
+##  Residual                          0.016717 0.12930 
+## Number of obs: 13740, groups:  prolificParticipantID, 2748
+## 
+## Fixed effects:
+##                                               Estimate Std. Error         df
+## (Intercept)                                  4.958e-01  6.286e-03  6.571e+03
+## perceived_attractiveness_rescaledNumeric_01  1.469e-01  4.621e-03  1.370e+04
+## perceived_gendermale                        -1.359e-02  3.275e-03  1.154e+04
+## perceived_age_scaled                         9.993e-02  1.452e-02  1.370e+04
+## participantSexmale                          -1.744e-02  4.413e-03  4.881e+03
+## participantAge_scaled                        5.522e-02  1.071e-02  4.997e+03
+## perceived_gendermale:participantSexmale      1.233e-02  4.486e-03  1.134e+04
+## perceived_age_scaled:participantAge_scaled  -6.611e-02  3.125e-02  1.368e+04
+##                                             t value Pr(>|t|)    
+## (Intercept)                                  78.868  < 2e-16 ***
+## perceived_attractiveness_rescaledNumeric_01  31.782  < 2e-16 ***
+## perceived_gendermale                         -4.150 3.36e-05 ***
+## perceived_age_scaled                          6.885 6.04e-12 ***
+## participantSexmale                           -3.953 7.84e-05 ***
+## participantAge_scaled                         5.156 2.62e-07 ***
+## perceived_gendermale:participantSexmale       2.748  0.00601 ** 
+## perceived_age_scaled:participantAge_scaled   -2.116  0.03439 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) p__N_0 prcvd_ prcv__ prtcpS prtcA_ prc_:S
+## prcvd__N_01 -0.432                                          
+## prcvd_gndrm -0.335  0.236                                   
+## prcvd_g_scl -0.530  0.179  0.016                            
+## prtcpntSxml -0.428  0.051  0.365  0.016                     
+## prtcpntAg_s -0.720 -0.020 -0.003  0.509  0.077              
+## prcvd_gnd:S  0.175  0.012 -0.683 -0.001 -0.517 -0.002       
+## prcvd_g_:A_  0.420 -0.031 -0.020 -0.874 -0.003 -0.576  0.009
+## [1] "********"
+## [1] "--------------------------------"
+## [1] "unusual"
+## [1] "original"
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: as.formula(modelString)
+##    Data: df
+## 
+## REML criterion at convergence: 11418.9
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -2.47772 -0.58858  0.08405  0.64247  2.63941 
+## 
+## Random effects:
+##  Groups                Name        Variance Std.Dev.
+##  prolificParticipantID (Intercept) 0.06622  0.2573  
+##  Residual                          0.10003  0.3163  
+## Number of obs: 13740, groups:  prolificParticipantID, 2748
+## 
+## Fixed effects:
+##                                               Estimate Std. Error         df
+## (Intercept)                                  4.750e-01  1.846e-02  6.633e+03
+## perceived_attractiveness_rescaledNumeric_01 -1.464e-01  1.305e-02  1.345e+04
+## perceived_gendermale                        -1.002e-02  7.935e-03  1.136e+04
+## perceived_age_scaled                        -3.582e-02  3.350e-02  1.322e+04
+## participantSexmale                           5.109e-02  1.265e-02  4.231e+03
+## participantAge_scaled                        1.871e-01  3.205e-02  5.273e+03
+## perceived_gendermale:participantSexmale      7.607e-03  1.103e-02  1.127e+04
+## perceived_age_scaled:participantAge_scaled  -3.698e-02  7.096e-02  1.318e+04
+##                                             t value Pr(>|t|)    
+## (Intercept)                                  25.728  < 2e-16 ***
+## perceived_attractiveness_rescaledNumeric_01 -11.224  < 2e-16 ***
+## perceived_gendermale                         -1.263    0.207    
+## perceived_age_scaled                         -1.069    0.285    
+## participantSexmale                            4.040 5.44e-05 ***
+## participantAge_scaled                         5.836 5.65e-09 ***
+## perceived_gendermale:participantSexmale       0.689    0.491    
+## perceived_age_scaled:participantAge_scaled   -0.521    0.602    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) p__N_0 prcvd_ prcv__ prtcpS prtcA_ prc_:S
+## prcvd__N_01 -0.408                                          
+## prcvd_gndrm -0.288  0.186                                   
+## prcvd_g_scl -0.547  0.189  0.035                            
+## prtcpntSxml -0.427  0.060  0.320  0.019                     
+## prtcpntAg_s -0.732 -0.031  0.000  0.503  0.084              
+## prcvd_gnd:S  0.169 -0.043 -0.702 -0.005 -0.450 -0.002       
+## prcvd_g_:A_  0.433 -0.033 -0.018 -0.875 -0.006 -0.575  0.007
+## [1] "********"
+## [1] "beautified"
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: as.formula(modelString)
+##    Data: df
+## 
+## REML criterion at convergence: 3423.7
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -2.2575 -0.5464 -0.2728  0.3002  3.7419 
+## 
+## Random effects:
+##  Groups                Name        Variance Std.Dev.
+##  prolificParticipantID (Intercept) 0.02002  0.1415  
+##  Residual                          0.06172  0.2484  
+## Number of obs: 13740, groups:  prolificParticipantID, 2748
+## 
+## Fixed effects:
+##                                               Estimate Std. Error         df
+## (Intercept)                                  1.155e-01  1.174e-02  6.770e+03
+## perceived_attractiveness_rescaledNumeric_01  1.211e-01  8.801e-03  1.373e+04
+## perceived_gendermale                        -4.074e-02  6.285e-03  1.161e+04
+## perceived_age_scaled                         4.960e-02  2.765e-02  1.373e+04
+## participantSexmale                          -3.323e-03  8.195e-03  5.123e+03
+## participantAge_scaled                        7.113e-02  1.989e-02  5.140e+03
+## perceived_gendermale:participantSexmale     -5.043e-03  8.612e-03  1.139e+04
+## perceived_age_scaled:participantAge_scaled  -1.987e-01  5.953e-02  1.372e+04
+##                                             t value Pr(>|t|)    
+## (Intercept)                                   9.836  < 2e-16 ***
+## perceived_attractiveness_rescaledNumeric_01  13.760  < 2e-16 ***
+## perceived_gendermale                         -6.482 9.43e-11 ***
+## perceived_age_scaled                          1.794 0.072797 .  
+## participantSexmale                           -0.406 0.685108    
+## participantAge_scaled                         3.575 0.000353 ***
+## perceived_gendermale:participantSexmale      -0.586 0.558149    
+## perceived_age_scaled:participantAge_scaled   -3.338 0.000846 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) p__N_0 prcvd_ prcv__ prtcpS prtcA_ prc_:S
+## prcvd__N_01 -0.440                                          
+## prcvd_gndrm -0.343  0.234                                   
+## prcvd_g_scl -0.540  0.177  0.015                            
+## prtcpntSxml -0.426  0.052  0.377  0.016                     
+## prtcpntAg_s -0.715 -0.021 -0.003  0.522  0.075              
+## prcvd_gnd:S  0.180  0.012 -0.683 -0.001 -0.534 -0.002       
+## prcvd_g_:A_  0.429 -0.031 -0.020 -0.874 -0.003 -0.590  0.009
+## [1] "********"
+## [1] "--------------------------------"
+## [1] "sociability"
+## [1] "original"
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: as.formula(modelString)
+##    Data: df
+## 
+## REML criterion at convergence: -8980.4
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -4.3903 -0.4937  0.1097  0.5746  3.3948 
+## 
+## Random effects:
+##  Groups                Name        Variance Std.Dev.
+##  prolificParticipantID (Intercept) 0.006525 0.08078 
+##  Residual                          0.025746 0.16046 
+## Number of obs: 13740, groups:  prolificParticipantID, 2748
+## 
+## Fixed effects:
+##                                               Estimate Std. Error         df
+## (Intercept)                                  5.269e-01  7.789e-03  7.852e+03
+## perceived_attractiveness_rescaledNumeric_01  3.192e-01  6.234e-03  1.361e+04
+## perceived_gendermale                        -1.958e-03  3.996e-03  1.163e+04
+## perceived_age_scaled                         2.488e-03  1.614e-02  1.373e+04
+## participantSexmale                           2.187e-02  5.053e-03  5.551e+03
+## participantAge_scaled                        4.543e-02  1.313e-02  6.320e+03
+## perceived_gendermale:participantSexmale     -1.128e-02  5.566e-03  1.150e+04
+## perceived_age_scaled:participantAge_scaled  -2.022e-03  3.423e-02  1.373e+04
+##                                             t value Pr(>|t|)    
+## (Intercept)                                  67.639  < 2e-16 ***
+## perceived_attractiveness_rescaledNumeric_01  51.206  < 2e-16 ***
+## perceived_gendermale                         -0.490 0.624200    
+## perceived_age_scaled                          0.154 0.877447    
+## participantSexmale                            4.328 1.53e-05 ***
+## participantAge_scaled                         3.460 0.000545 ***
+## perceived_gendermale:participantSexmale      -2.026 0.042766 *  
+## perceived_age_scaled:participantAge_scaled   -0.059 0.952888    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) p__N_0 prcvd_ prcv__ prtcpS prtcA_ prc_:S
+## prcvd__N_01 -0.457                                          
+## prcvd_gndrm -0.334  0.177                                   
+## prcvd_g_scl -0.621  0.179  0.032                            
+## prtcpntSxml -0.407  0.071  0.404  0.023                     
+## prtcpntAg_s -0.704 -0.037  0.000  0.593  0.070              
+## prcvd_gnd:S  0.200 -0.041 -0.703 -0.005 -0.568 -0.003       
+## prcvd_g_:A_  0.494 -0.032 -0.017 -0.877 -0.007 -0.677  0.007
+## [1] "********"
+## [1] "beautified"
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: as.formula(modelString)
+##    Data: df
+## 
+## REML criterion at convergence: -10166.2
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -4.0849 -0.4531  0.0709  0.5689  3.7754 
+## 
+## Random effects:
+##  Groups                Name        Variance Std.Dev.
+##  prolificParticipantID (Intercept) 0.005354 0.07317 
+##  Residual                          0.023940 0.15472 
+## Number of obs: 13740, groups:  prolificParticipantID, 2748
+## 
+## Fixed effects:
+##                                               Estimate Std. Error         df
+## (Intercept)                                  4.810e-01  6.861e-03  7.097e+03
+## perceived_attractiveness_rescaledNumeric_01  2.268e-01  5.359e-03  1.366e+04
+## perceived_gendermale                        -3.326e-02  3.901e-03  1.173e+04
+## perceived_age_scaled                        -7.028e-02  1.683e-02  1.366e+04
+## participantSexmale                          -2.866e-03  4.739e-03  5.679e+03
+## participantAge_scaled                       -1.818e-02  1.149e-02  5.376e+03
+## perceived_gendermale:participantSexmale      1.346e-02  5.352e-03  1.149e+04
+## perceived_age_scaled:participantAge_scaled   8.715e-02  3.627e-02  1.368e+04
+##                                             t value Pr(>|t|)    
+## (Intercept)                                  70.107  < 2e-16 ***
+## perceived_attractiveness_rescaledNumeric_01  42.318  < 2e-16 ***
+## perceived_gendermale                         -8.525  < 2e-16 ***
+## perceived_age_scaled                         -4.174 3.01e-05 ***
+## participantSexmale                           -0.605   0.5453    
+## participantAge_scaled                        -1.582   0.1137    
+## perceived_gendermale:participantSexmale       2.515   0.0119 *  
+## perceived_age_scaled:participantAge_scaled    2.403   0.0163 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) p__N_0 prcvd_ prcv__ prtcpS prtcA_ prc_:S
+## prcvd__N_01 -0.456                                          
+## prcvd_gndrm -0.361  0.229                                   
+## prcvd_g_scl -0.562  0.175  0.014                            
+## prtcpntSxml -0.420  0.055  0.405  0.017                     
+## prtcpntAg_s -0.705 -0.022 -0.003  0.551  0.070              
+## prcvd_gnd:S  0.192  0.012 -0.684 -0.001 -0.574 -0.002       
+## prcvd_g_:A_  0.447 -0.030 -0.020 -0.874 -0.003 -0.623  0.009
+## [1] "********"

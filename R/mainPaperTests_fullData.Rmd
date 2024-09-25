@@ -1,0 +1,57 @@
+---
+title: "Tests performed on the complete rating set in the main paper"
+output: html_document
+date: "2024-05-02"
+---
+
+Load all the necessary packages
+```{r}
+library(lme4)    # lmer
+library(lmerTest)
+library(ordinal) # clm
+library(readr)
+library(dplyr)
+#library(stereord)
+require(MASS) # polr
+require(Hmisc)
+library(brant)
+library(VGAM) # vglm
+library(generalhoslem)
+library(erer) # marginals
+library(MuMIn) # R2 lmer
+library(emmeans)
+library(ggplot2)
+library(tools)
+```
+
+
+EMMeans computation and file generation
+```{r, echo=TRUE}
+modelLoadPathBase <- "/models/dependentAttributes"
+dfSavePathBase <- "/../csv_storage/emmeansFilesFromR"
+load_01_files <- FALSE
+
+dependent_attr_list <- c("perceived_attractiveness", "feminine", "happy", "intelligence", "trustworthy", "unusual", "sociability")
+beautification_list <- c("original","beautified")
+
+for (attr in dependent_attr_list){
+  print("--------------------------------")
+  print(attr)
+  for (beautification in beautification_list){
+    print(beautification)
+    if (load_01_files){
+      load(paste0(modelLoadPathBase,"/",attr,"_",beautification,"_lmer_re_osmFinalL_lin.Rdata"))
+    }else{
+      load(paste0(modelLoadPathBase,"/",attr,"/",beautification,"/lmer_re_osmFinalL_lin.Rdata"))
+    }
+    emm1 = emmeans(lmer_re_osmFinalL_lin , specs = pairwise ~ perceived_gender:participantSex)
+    
+    emm_means_df <- as.data.frame(emm1$emmeans)
+    write.csv(emm_means_df, file = paste0(dfSavePathBase,"/",attr,"_emmeans_",beautification,".csv"), row.names = FALSE)
+    
+    emm_contrasts_df <- as.data.frame(emm1$contrasts)
+    write.csv(emm_contrasts_df, file = paste0(dfSavePathBase,"/",attr,"_emmContrasts_",beautification,".csv"), row.names = FALSE)
+  }
+  #break
+}
+```

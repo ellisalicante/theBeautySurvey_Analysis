@@ -1,0 +1,855 @@
+---
+title: "Levels of the factor variable"
+output:
+  html_document: default
+  pdf_document: default
+date: "2024-01-23"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+- Y = perceived_gender + perceived_age + participantSex+  participantAge
+OSM's can't handle interaction effects
+
+Run this with BFGS using the new package version with SE turned off
+
+```{r paquets, warning=FALSE, echo=FALSE,message=FALSE}
+library(lme4)     #lmer
+library(lmerTest)
+library(ordinal)  #clm
+library(readr)
+library(dplyr)
+library(stereord)
+require(MASS)  #polr
+require(Hmisc)
+library(brant)  #test de paralelismo
+library(VGAM)  #vglm
+library(generalhoslem)
+library(erer)  #marginals
+library(MuMIn)  #R2 lmer
+```
+
+- arreglar los datos para que sean categoricos
+
+```{r,  echo=FALSE,message=FALSE}
+source("REading_data.R")
+source("Functions_beauty.R")
+path_int=   "../csv_storage/models/dependentAttributes"
+path_attrac= "../csv_storage/models/attractiveness"
+class(df$perceived_attractivenessfact)
+class(df$imageGender)
+class(df$perceived_age)
+class(df$participantSex)
+class(df$participantAge)
+RUN_MODELS=FALSE
+```
+
+# ORIGINAL  images 
+```{r ,  echo=FALSE}
+df2 <- subset(df, df$beautification=="original")
+```
+
+```{r,  echo=FALSE}
+file_name= paste(path_attrac,"M_OSM_withOUT_interactions_7L_ori.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =perceived_attractivenessfact ~ 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Collapse levels
+
+```{r,  echo=FALSE}
+# original 6-7 colapse
+df2$perceived_attractiveness_6L <- df2$perceived_attractivenessfact
+df2$perceived_attractiveness_6L[ df2$perceived_attractivenessfact==7]=6
+df2$perceived_attractiveness_6L <- droplevels(df2$perceived_attractiveness_6L)
+# check
+sort(unique(df2$perceived_attractiveness_6L))
+table(df2$perceived_attractiveness_6L,df2$perceived_attractivenessfact)
+```
+
+```{r ,  echo=FALSE}
+file_name= paste(path_attrac,"M_OSM_withOUT_interactions_6L_ori.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =perceived_attractiveness_6L ~ 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Attractiveness separated now. Next attribute 
+
+## Intelligente
+
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_int7L_ori_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =intelligence_7L ~ perceived_attractiveness_6L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Collapse levels
+
+```{r,  echo=FALSE}
+# original 6-7 colapse
+df2$intelligence_6L <- df2$intelligence_7L
+df2$intelligence_6L[ df2$intelligence_6L==7]=6
+df2$intelligence_6L <- droplevels(df2$intelligence_6L)
+# check
+sort(unique(df2$intelligence_6L))
+table(df2$intelligence_6L,df2$intelligence_7L)
+```
+
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_int6L_ori_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =intelligence_6L ~ perceived_attractiveness_6L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Collapse 5 and 6 as well
+
+```{r,  echo=FALSE}
+# original 6-7 colapse
+df2$intelligence_5L <- df2$intelligence_6L
+df2$intelligence_5L[ df2$intelligence_5L==6]=5
+df2$intelligence_5L <- droplevels(df2$intelligence_5L)
+# check
+sort(unique(df2$intelligence_5L))
+table(df2$intelligence_5L,df2$intelligence_7L)
+```
+
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_int5L_ori_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =intelligence_5L ~ perceived_attractiveness_6L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Separable! Move onto the next attribute
+
+## Happy
+
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_happy7L_ori_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =happy_7L ~ perceived_attractiveness_6L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Seems separable. Move onto the next attribute
+
+## sociability
+
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_sociability7L_ori_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =sociability_7L ~ perceived_attractiveness_6L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Collapse 6 and 7
+
+```{r,   echo=FALSE}
+# original 6-7 colapse
+df2$sociability_6L <- df2$sociability_7L
+df2$sociability_6L[ df2$sociability_6L==7]=6
+df2$sociability_6L <- droplevels(df2$sociability_6L)
+# check
+sort(unique(df2$sociability_6L))
+table(df2$sociability_6L,df2$sociability_7L)
+```
+
+Rerun sociability on 6 levels
+
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_sociability6L_ori_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =sociability_6L ~ perceived_attractiveness_6L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Separable. Move onto next attribute
+
+## Unusual
+
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_unusual7L_ori_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =unusual_7L ~ perceived_attractiveness_6L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Collapse 6 and 7
+```{r,   echo=FALSE}
+# original 6-7 colapse
+df2$unusual_6L <- df2$unusual_7L
+df2$unusual_6L[ df2$unusual_6L==7]=6
+df2$unusual_6L <- droplevels(df2$unusual_6L)
+# check
+sort(unique(df2$unusual_6L))
+table(df2$unusual_6L,df2$unusual_7L)
+```
+
+Re-run on 6 level
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_unusual6L_ori_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =unusual_6L ~ perceived_attractiveness_6L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Collapse 5 and 6
+```{r,   echo=FALSE}
+# original 6-7 colapse
+df2$unusual_5L <- df2$unusual_6L
+df2$unusual_5L[ df2$unusual_5L==6]=5
+df2$unusual_5L <- droplevels(df2$unusual_5L)
+# check
+sort(unique(df2$unusual_5L))
+table(df2$unusual_5L,df2$unusual_7L)
+```
+
+Re run on 5L
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_unusual5L_ori_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =unusual_5L ~ perceived_attractiveness_6L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Collapse 1 and 2
+
+```{r,  echo=FALSE}
+df2$unusual_4L <- df2$unusual_5L
+df2$unusual_4L[ df2$unusual_4L==2]=1
+
+for (i in 2:4) {df2$unusual_4L[ df2$unusual_4L==(i+1)]=i}
+df2$unusual_4L <- droplevels(df2$unusual_4L)
+# check
+#sort(unique(df2$perceived_attractiveness_6L))
+table(df2$unusual_4L,df2$unusual_7L)
+```
+
+Re run unusual on 4L
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_unusual4L_ori_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =unusual_4L ~ perceived_attractiveness_6L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Collapse 2 and 3
+```{r,   echo=FALSE}
+# original 6-7 colapse
+df2$unusual_3L <- df2$unusual_4L
+df2$unusual_3L[ df2$unusual_3L==3]=2
+df2$unusual_3L[ df2$unusual_3L==4]=3
+df2$unusual_3L <- droplevels(df2$unusual_3L)
+# check
+sort(unique(df2$unusual_5L))
+table(df2$unusual_3L,df2$unusual_7L)
+```
+
+Re run unusual on 3 levels
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_unusual3L_ori_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =unusual_3L ~ perceived_attractiveness_6L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+## Trustworthy
+
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_trustworthy7L_ori_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =trustworthy_7L ~ perceived_attractiveness_6L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Try collapsing 6 and 7
+
+```{r,   echo=FALSE}
+# original 6-7 colapse
+df2$trustworthy_6L <- df2$trustworthy_7L
+df2$trustworthy_6L[ df2$trustworthy_6L==7]=6
+df2$trustworthy_6L <- droplevels(df2$trustworthy_6L)
+# check
+sort(unique(df2$trustworthy_6L))
+table(df2$trustworthy_6L,df2$trustworthy_7L)
+```
+
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_trustworthy6L_ori_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =trustworthy_6L ~ perceived_attractiveness_6L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Much more separable now - move onto the next attribute
+
+## feminine
+
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_feminine7L_ori_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =feminine_7L ~ perceived_attractiveness_6L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Seems separable already. Move onto the beautified images!
+
+Save the original images dataframe!
+```{r}
+file_name= paste(path_int,"Original_Data_reescaled.RData", sep="")
+save(df2,file=file_name)
+write.csv(df2,paste0(path_int,"/","original_data_rescaled.csv"),row.names = FALSE)
+```
+
+
+# BEAUTIFIED  images 
+```{r ,  echo=FALSE}
+df2 <- subset(df, df$beautification=="beautified")
+```
+
+```{r ,  echo=FALSE}
+file_name= paste(path_attrac,"M_OSM_withOUT_interactions_7L_beau.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =perceived_attractivenessfact ~
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+Collapse 1 and 2
+
+```{r,  echo=FALSE}
+df2$perceived_attractiveness_6L <- df2$perceived_attractivenessfact
+df2$perceived_attractiveness_6L[ df2$perceived_attractivenessfact==2]=1
+
+for (i in 2:6) {df2$perceived_attractiveness_6L[ df2$perceived_attractiveness_6L==(i+1)]=i}
+df2$perceived_attractiveness_6L <- droplevels(df2$perceived_attractiveness_6L)
+# check
+#sort(unique(df2$perceived_attractiveness_6L))
+table(df2$perceived_attractiveness_6L,df2$perceived_attractivenessfact)
+```
+
+```{r ,  echo=FALSE}
+file_name= paste(path_attrac,"M_OSM_withOUT_interactions_6L_beau.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =perceived_attractiveness_6L ~
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Merge 1 and 2 again
+```{r,  echo=FALSE}
+df2$perceived_attractiveness_5L <- df2$perceived_attractiveness_6L
+df2$perceived_attractiveness_5L[ df2$perceived_attractiveness_5L==2]=1
+
+for (i in 2:5) {df2$perceived_attractiveness_5L[ df2$perceived_attractiveness_5L==(i+1)]=i}
+df2$perceived_attractiveness_5L <- droplevels(df2$perceived_attractiveness_5L)
+# check
+#sort(unique(df2$perceived_attractiveness_6L))
+table(df2$perceived_attractiveness_5L,df2$perceived_attractivenessfact)
+```
+
+Re-run model now for 5 levels
+```{r ,  echo=FALSE}
+file_name= paste(path_attrac,"M_OSM_withOUT_interactions_5L_beau.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =perceived_attractiveness_5L ~
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+# Intelligence
+
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_int7L_beau_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =intelligence_7L ~ perceived_attractiveness_5L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Collapse 6 and 7 - interesting because on the beautified set I was typically collapsing 1 and 2
+```{r,   echo=FALSE}
+# original 6-7 colapse
+df2$intelligence_6L <- df2$intelligence_7L
+df2$intelligence_6L[ df2$intelligence_6L==7]=6
+df2$intelligence_6L <- droplevels(df2$intelligence_6L)
+# check
+sort(unique(df2$intelligence_6L))
+table(df2$intelligence_6L,df2$intelligence_7L)
+```
+Re-run intelligence on 6 levels
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_int6L_beau_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =intelligence_6L ~ perceived_attractiveness_5L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+These values seem separable enough. Move onto the next dependent attribute
+
+## happy
+
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_happy7L_beau_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =happy_7L ~ perceived_attractiveness_5L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Seems separable enough
+
+## sociability
+
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_sociability7L_beau_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =sociability_7L ~ perceived_attractiveness_5L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Collapse 1 and 2
+```{r,  echo=FALSE}
+df2$sociability_6L <- df2$sociability_7L
+df2$sociability_6L[ df2$sociability_6L==2]=1
+
+for (i in 2:6) {df2$sociability_6L[ df2$sociability_6L==(i+1)]=i}
+df2$sociability_6L <- droplevels(df2$sociability_6L)
+# check
+#sort(unique(df2$perceived_attractiveness_6L))
+table(df2$sociability_6L,df2$sociability_7L)
+```
+
+Re-run sociability on 6 levels
+
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_sociability6L_beau_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =sociability_6L ~ perceived_attractiveness_5L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+## Unusual
+
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_unusual7L_beau_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =unusual_7L ~ perceived_attractiveness_5L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Collapse 1 and 2
+```{r,  echo=FALSE}
+df2$unusual_6L <- df2$unusual_7L
+df2$unusual_6L[ df2$unusual_6L==2]=1
+
+for (i in 2:6) {df2$unusual_6L[ df2$unusual_6L==(i+1)]=i}
+df2$unusual_6L <- droplevels(df2$unusual_6L)
+# check
+#sort(unique(df2$perceived_attractiveness_6L))
+table(df2$unusual_6L,df2$unusual_7L)
+```
+
+Re-run unusual on 6 levels
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_unusual6L_beau_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =unusual_6L ~ perceived_attractiveness_5L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Collapse 5 and 6 now
+```{r,  echo=FALSE}
+df2$unusual_5L <- df2$unusual_6L
+df2$unusual_5L[ df2$unusual_5L==6]=5
+
+df2$unusual_5L <- droplevels(df2$unusual_5L)
+# check
+#sort(unique(df2$perceived_attractiveness_6L))
+table(df2$unusual_5L,df2$unusual_7L)
+```
+Re-run unusual on 5L
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_unusual5L_beau_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =unusual_5L ~ perceived_attractiveness_5L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Collapse 1 and 2
+```{r,  echo=FALSE}
+df2$unusual_4L <- df2$unusual_5L
+df2$unusual_4L[ df2$unusual_4L==2]=1
+
+for (i in 2:4) {df2$unusual_4L[ df2$unusual_4L==(i+1)]=i}
+df2$unusual_4L <- droplevels(df2$unusual_4L)
+# check
+#sort(unique(df2$perceived_attractiveness_6L))
+table(df2$unusual_4L,df2$unusual_7L)
+```
+Re-run unusual on 4L
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_unusual4L_beau_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =unusual_4L ~ perceived_attractiveness_5L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+1 and 2 are still very close - collapse again into 3?! levels
+
+Collapse 1 and 2
+```{r,  echo=FALSE}
+df2$unusual_3L <- df2$unusual_4L
+df2$unusual_3L[ df2$unusual_3L==2]=1
+
+for (i in 2:3) {df2$unusual_3L[ df2$unusual_3L==(i+1)]=i}
+df2$unusual_3L <- droplevels(df2$unusual_3L)
+# check
+#sort(unique(df2$perceived_attractiveness_6L))
+table(df2$unusual_3L,df2$unusual_7L)
+```
+
+Re-run unusual on 3L
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_unusual3L_beau_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =unusual_3L ~ perceived_attractiveness_5L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+## trustworthy
+
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_trustworthy7L_beau_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =trustworthy_7L ~ perceived_attractiveness_5L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Collapse 5 and 6
+
+```{r,  echo=FALSE}
+df2$trustworthy_6L <- df2$trustworthy_7L
+df2$trustworthy_6L[ df2$trustworthy_6L==6]=5
+
+# also collapse the 7's into 6's, but still a separate level from the new 5-6
+df2$trustworthy_6L[ df2$trustworthy_6L==7]=6
+df2$trustworthy_6L <- droplevels(df2$trustworthy_6L)
+
+# check
+#sort(unique(df2$perceived_attractiveness_6L))
+table(df2$trustworthy_6L,df2$trustworthy_7L)
+```
+
+Re-run the trustworthy 6L
+
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_trustworthy6L_beau_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =trustworthy_6L ~ perceived_attractiveness_5L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+## feminine
+
+
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_feminine7L_beau_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =feminine_7L ~ perceived_attractiveness_5L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Collapse 1 and 2
+```{r,  echo=FALSE}
+df2$feminine_6L <- df2$feminine_7L
+df2$feminine_6L[ df2$feminine_6L==2]=1
+
+for (i in 2:6) {df2$feminine_6L[ df2$feminine_6L==(i+1)]=i}
+df2$feminine_6L <- droplevels(df2$feminine_6L)
+# check
+#sort(unique(df2$perceived_attractiveness_6L))
+table(df2$feminine_6L,df2$feminine_7L)
+```
+Re-run feminine 6L
+```{r ,  echo=FALSE}
+file_name= paste(path_int,"M_OSM_feminine6L_beau_Attrac6.RData", sep="")
+if(RUN_MODELS){
+  M_OSM <- OSM(formula =feminine_6L ~ perceived_attractiveness_5L + 
+                              perceived_gender + perceived_age + 
+                              participantSex +  participantAge , 
+                              data = df2 ,phi1.iszero = TRUE, repar = TRUE, Approx.start.values = FALSE,  
+                              method =  "BFGS", HES = FALSE, SE=FALSE,
+                              control = list(maxit = 10000, reltol = 1e-6))
+  save(M_OSM, file=file_name)
+}
+load(file_name)
+M_OSM$phi
+```
+
+Seems separable now
+
+Save the beautified dataframe!
+```{r}
+file_name= paste(path_int,"Beauty_Data_reescaled.RData", sep="")
+save(df2,file=file_name)
+write.csv(df2,paste0(path_int,"/","beautified_data_rescaled.csv"),row.names = FALSE)
+```
+
+
