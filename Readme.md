@@ -13,6 +13,8 @@ The data is available in the corresponding Zenodo repository. Place all the data
 
 The Zenodo repository also contains helper csv files used for the analysis. If you only want to access the collected ratings, scores given by each rater can be found in the ```fullRatingsFile.csv``` file. The centralized scores can be found in the ```allAttributesMedians_df.csv``` file.
 
+The images used in the study were picked from two publicly available research datasets - the [Chicago Faces Database (CFD)](https://www.chicagofaces.org/) and the [FACES dataset](https://faces.mpdl.mpg.de/imeji/). The images picked were renamed so that they include information about the person in the picture and to number them serially. The mapping between the names we used and the names in the databases they were sourced from is available as a dictionary in the ```ImagesPickedToNumbersMapping.pkl``` file.
+
 # Pre-computed Models in R
 
 Along with the CSV files, all the statistical models generated have also been made available for ease of use. These are placed in ```csv_storage/models```. In case you wish to re-run these models, all the code is available in the R scripts. Please remember to set the flags to the appropriate values to generate the model files. In case you want to recompute the models, please run the appropriate file as described in the following section.
